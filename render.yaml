@@ -2,6 +2,7 @@ services:
   - type: web
     name: appposter_api
     env: python
+    pythonVersion: 3.10
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn facebook_server.wsgi:application
     envVars:
