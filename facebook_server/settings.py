@@ -178,7 +178,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'insecure-fallback-key')  # ✅ lấy 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # ✅ tự động False
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,appposter_api.onrender.com').split(',')  # ✅ chia chuỗi thành list
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,appposter-api.onrender.com').split(',')  # ✅ chia chuỗi thành list
 
 
 # Application definition
@@ -283,7 +283,7 @@ AUTH_USER_MODEL = 'auth_api_fb.CustomUser'
 
 CSRF_TRUSTED_ORIGINS = [
     "https://0fe9-116-108-2-160.ngrok-free.app",
-    "https://appposter_api.onrender.com"  # ✅ thêm nếu cần
+    "https://appposter-api.onrender.com"  # ✅ thêm nếu cần
 ]
 
 
