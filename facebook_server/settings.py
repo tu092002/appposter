@@ -286,6 +286,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://appposter-api.onrender.com"  # ✅ thêm nếu cần
 ]
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Django REST Framework settings JWT
 REST_FRAMEWORK = {
