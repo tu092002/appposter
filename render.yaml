@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: appposter_api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn facebook_server.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: facebook_server.settings
