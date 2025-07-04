@@ -178,7 +178,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'insecure-fallback-key')  # ✅ lấy 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # ✅ tự động False
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost', 'appposter_api.onrender.com').split(',')  # ✅ chia chuỗi thành list
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,appposter_api.onrender.com').split(',')  # ✅ chia chuỗi thành list
 
 
 # Application definition
