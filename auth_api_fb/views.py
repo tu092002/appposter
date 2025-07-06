@@ -3,9 +3,15 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from datetime import date
+from datetime import date, datetime
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.core.cache import cache
+
+from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import check_password
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 @api_view(['POST'])
 def login_view(request):
@@ -33,7 +39,10 @@ def login_view(request):
     refresh_token = str(refresh)
 
     # ✅ Lưu trạng thái đã login
-    cache.set(f"user_logged_in:{username}", True, timeout=24*60*60)
+    cache.set(f"user_logged_in:{username}", {
+        "logged_in": True,
+        "timestamp": str(datetime.now())
+    }, timeout=86400)
 
     return Response({
         "success": True,
@@ -50,3 +59,22 @@ def logout_view(request):
     username = request.user.username
     cache.delete(f"user_logged_in:{username}")
     return Response({"message": "Đã đăng xuất thành công."})
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password_view(request):
+    user = request.user
+    old_password = request.data.get('old_password')
+    new_password = request.data.get('new_password')
+
+    if not old_password or not new_password:
+        return Response({"success": False, "message": "Vui lòng nhập đầy đủ mật khẩu cũ và mới."}, status=400)
+
+    if not user.check_password(old_password):
+        return Response({"success": False, "message": "Mật khẩu cũ không chính xác."}, status=400)
+
+    user.set_password(new_password)
+    user.save()
+
+    return Response({"success": True, "message": "Đổi mật khẩu thành công."})
